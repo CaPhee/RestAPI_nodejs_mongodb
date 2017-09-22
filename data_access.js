@@ -11,7 +11,7 @@ var uri = util.format(
   configMongoClient.port,
   configMongoClient.defaultDatabase
 );
-
+console.log('uri ', uri)
 function open() {
   // Connection URL. This is where your mongodb server is running.
 
