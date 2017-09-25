@@ -1,13 +1,21 @@
-module.exports = function(app) {
-  var userList = require('../models/user');
+var bodyParser = require("body-parser");
+var config = require("../config"),
+  app = require("express")(),
+  port = process.env.PORT || config.expressPort;
 
-  app.route('/user')
-    .get(userList.list_all_user)
-    .post(userList.create_a_user);
+var userList = require("../controllers/userController");
 
 
-  app.route('/user/:userId')
-    .get(userList.query_a_user)
-    .put(userList.update_a_user)
-    .delete(userList.delete_a_user);
-};
+
+app.listen(port,()=>{
+  console.log("Server is running "+ port);
+});
+
+app.route("/user")
+    .get(userList.getAll)
+    .post();
+
+app.route("/user/:userId")
+  .get()
+  .put()
+  .delete();
