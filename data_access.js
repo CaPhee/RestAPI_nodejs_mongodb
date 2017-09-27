@@ -13,8 +13,6 @@ var uri = util.format(
 );
 
 function open() {
-  // Connection URL. This is where your mongodb server is running.
-
   return new Promise((resolve, reject) => {
     // Use connect method to connect to the Server
     MongoClient.connect(uri, (err, db) => {

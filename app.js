@@ -1,10 +1,16 @@
-var config = require('./config'),
-    app = require('express')(),
-    port = process.env.PORT || config.expressPort;
-var router = require('./router')
-// app.set('views', path.join(__dirname, 'views'));
-// app.use(express.static(path.join(__dirname, 'public')));
+var config = require("./config"),
+  app = require("express")(),
+  bodyParser = require("body-parser"),
+  port = process.env.PORT || config.expressPort;
+var router = require("./router/user");
 
-app.listen(port)
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+// app.use(checkAuth);
+// app.set('view engine', 'jade');
+// app.set('view options', { layout: false });
 
-app.use(router)
+app.listen(port, () => {
+  console.log("Server is running ... " + port);
+});
+router(app)

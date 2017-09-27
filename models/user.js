@@ -4,7 +4,7 @@ var userModel = {
     findAll: function () {
         return db.open()
             .then((db) => {
-                return db.collection('Department')
+                return db.collection('Account')
             })
             .then((depa) => {
                 return depa.find().toArray()
