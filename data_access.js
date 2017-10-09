@@ -1,10 +1,40 @@
-var mongo = require('mongodb').MongoClient;
-var assert = require('assert');
-var ObjectId = require('mongodb').ObjectID;
+var { MongoClient } = require("mongodb"),
+  assert = require("assert"),
+  { ObjectId } = require("mongodb"),
+  util = require("util");
+var configMongoClient = require("./config").client.mongodb;
 
-mongo.connect('mongodb://127.0.0.1:27017/mydb',(err,db)=>{
-   db.collection('user').find().toArray((err,data)=>{
-       console.log(data)
-   })
-   db.close()
-})
+var uri = util.format(
+  "%s://%s:%d/%s",
+  configMongoClient.defaultUri,
+  configMongoClient.host,
+  configMongoClient.port,
+  configMongoClient.defaultDatabase
+);
+
+function open() {
+  return new Promise((resolve, reject) => {
+    // Use connect method to connect to the Server
+    MongoClient.connect(uri, (err, db) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(db);
+      }
+    });
+  });
+}
+
+function close(db) {
+  //Close connection
+  if (db) {
+    db.close();
+  }
+}
+
+let db = {
+  open: open,
+  close: close
+};
+
+module.exports = db;
